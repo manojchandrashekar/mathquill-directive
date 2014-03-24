@@ -13,4 +13,9 @@ gulp.task('copyLibs', function () {
         .pipe(gulp.dest('./dist/lib'));
 });
 
-gulp.task('default', ['jade', 'copyLibs']);
+gulp.task('js', function() {
+    gulp.src('./src/**/*.js')
+        .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('default', ['jade', 'copyLibs', 'js']);
