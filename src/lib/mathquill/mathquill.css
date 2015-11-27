@@ -1,11 +1,11 @@
 /*
- * LaTeX Math in pure HTML and CSS -- No images whatsoever
- * v0.xa
- * by Jay and Han
- * Lesser GPL Licensed: http: //www.gnu.org/licenses/lgpl.html
+ * MathQuill: http://mathquill.com
+ * by Jeanine and Han (laughinghan@gmail.com)
  *
- * This file is automatically included by mathquill.js
- *
+ * This Source Code Form is subject to the terms of the
+ * Mozilla Public License, v. 2.0. If a copy of the MPL
+ * was not distributed with this file, You can obtain
+ * one at http://mozilla.org/MPL/2.0/.
  */
 @font-face {
   font-family: Symbola;
@@ -15,6 +15,7 @@
 .mathquill-editable {
   display: -moz-inline-box;
   display: inline-block;
+  white-space: pre-wrap;
 }
 .mathquill-editable .cursor {
   border-left: 1px solid black;
@@ -100,7 +101,6 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-  white-space: pre-wrap;
 }
 .mathquill-rendered-math .empty {
   background: #ccc;
@@ -125,7 +125,7 @@
 .mathquill-rendered-math var,
 .mathquill-rendered-math i,
 .mathquill-rendered-math i.font {
-  font-syle: italic;
+  font-style: italic;
 }
 .mathquill-rendered-math var.florin {
   margin: 0 -0.1em;
@@ -278,6 +278,16 @@
   padding-left: .15em;
   padding-right: .2em;
   margin-right: .1em;
+}
+.mathquill-rendered-math .vector-prefix {
+  display: block;
+  text-align: center;
+  line-height: .25em;
+  margin-bottom: -0.1em;
+  font-size: 0.75em;
+}
+.mathquill-rendered-math .vector-stem {
+  display: block;
 }
 .mathquill-rendered-math,
 .mathquill-rendered-math .mathquill-editable {
