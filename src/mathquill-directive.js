@@ -3,11 +3,14 @@ var module = angular.module('mathquill', []);
 module.directive('mathquill', ['$interval', function ($interval) {
     return {
         restrict: 'E',
-        template: '<span class="mathquill-editable"></span>',
+        scope: {
+            readonly: '=readonly'
+        },
+        template: '<span ng-class="{\'mathquill-editable\' : !!!readonly}"></span>',
         replace: true,
         require: 'ngModel',
         link: function (scope, element, attrs, ngModel) {
-            var mathquill = element.mathquill('editable');
+            var mathquill = !!scope.readonly ? element.mathquill() : element.mathquill('editable');
 
             var latexWatcher = $interval(function() {
                 ngModel.$setViewValue(mathquill.mathquill('latex'));
