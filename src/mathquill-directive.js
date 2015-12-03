@@ -1,6 +1,6 @@
 var module = angular.module('mathquill', []);
 
-module.directive('mathquill', ['$interval', function ($interval) {
+module.directive('mathquill', ['$interval', '$timeout', function ($interval, $timeout) {
     return {
         restrict: 'E',
         scope: {
@@ -23,6 +23,12 @@ module.directive('mathquill', ['$interval', function ($interval) {
             ngModel.$render = function() {
                 mathquill.mathquill('latex', ngModel.$viewValue || '');
             };
+
+            $timeout(function() {
+                mathquill.find("textarea").focus();
+
+            }, 200);
+
         }
-    }
+    };
 }]);
