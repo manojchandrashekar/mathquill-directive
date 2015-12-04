@@ -26,7 +26,7 @@ module.directive('mathquill', ['$interval', '$timeout', function ($interval, $ti
 
             $timeout(function () {
                 scope.focus();
-            }, 200);
+            }, 300);
 
             /**
              * mathquillCmd broadcast handler
