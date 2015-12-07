@@ -8,36 +8,46 @@ module.directive('mathquill', ['$interval', '$timeout', function ($interval, $ti
         },
         template: '<span ng-class="{\'mathquill-editable\' : !!!readonly}"></span>',
         replace: true,
-        require: 'ngModel',
-        link: function (scope, element, attrs, ngModel) {
-            var mathquill = !!scope.readonly ? element.mathquill() : element.mathquill('editable');
+        require: '?ngModel',
+        transclude: true,
+        link: function (scope, element, attrs, ngModel, transclude) {
+            var mathquill = !!scope.readonly || !ngModel ? element.mathquill() : element.mathquill('editable');
+            if (_.isEmpty(ngModel)) {
+                scope.readonly = true;
 
-            var latexWatcher = $interval(function () {
-                ngModel.$setViewValue(mathquill.mathquill('latex'));
-            }, 500);
+                transclude(scope, function(clone, scope) {
+                    scope.latex = clone.html();
+                });
 
-            scope.$on('$destroy', function () {
-                $interval.cancel(latexWatcher);
-            });
+                mathquill.mathquill('latex', scope.latex);
+            } else {
+                var latexWatcher = $interval(function () {
+                    ngModel.$setViewValue(mathquill.mathquill('latex'));
+                }, 500);
 
-            ngModel.$render = function () {
-                mathquill.mathquill('latex', ngModel.$viewValue || '');
-            };
+                scope.$on('$destroy', function () {
+                    $interval.cancel(latexWatcher);
+                });
 
-            $timeout(function () {
-                scope.focus();
-            }, 300);
+                ngModel.$render = function () {
+                    mathquill.mathquill('latex', ngModel.$viewValue || '');
+                };
 
-            /**
-             * mathquillCmd broadcast handler
-             */
-            scope.$on('mathquill.command', function (event, command) {
-                if (!!scope.readonly) {
-                    return;
-                }
-                mathquill.mathquill('cmd', command);
-                scope.focus();
-            });
+                $timeout(function () {
+                    scope.focus();
+                }, 300);
+
+                /**
+                 * mathquillCmd broadcast handler
+                 */
+                var listener = scope.$on('mathquill.command', function (event, command) {
+                    if (!!scope.readonly) {
+                        return;
+                    }
+                    mathquill.mathquill('cmd', command);
+                    scope.focus();
+                });
+            }
 
             /**
              * focus on mathquill element
