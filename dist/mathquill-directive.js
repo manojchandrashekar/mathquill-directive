@@ -4,7 +4,7 @@ module.directive('mathquill', ['$interval', '$timeout', function ($interval, $ti
     return {
         restrict: 'E',
         scope: {
-            readonly: '=ngReadonly'
+            //readonly: '=ngReadonly'
         },
         template: '<span ng-class="{\'mathquill-editable\' : !!!readonly}"></span>',
         replace: true,
