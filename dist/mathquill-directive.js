@@ -49,6 +49,12 @@ module.directive('mathquill', ['$interval', '$timeout', function ($interval, $ti
                 });
             }
 
+            element.bind("keydown", function (event) {
+                if ((event.ctrlKey || event.metaKey) && event.keyCode === 13) {
+                    scope.$emit('mathquillSave');
+                }
+            });
+
             /**
              * focus on mathquill element
              */
