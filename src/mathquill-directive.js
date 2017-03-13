@@ -16,7 +16,12 @@ module.directive('mathquill', ['$interval', '$timeout', function ($interval, $ti
                 scope.readonly = true;
 
                 transclude(scope, function(clone, scope) {
-                    scope.latex = clone.html();
+                    // TODO: Problem found after upgrading to angular 1.6:
+                    //      scope.latex = '1^2+1_1=\\frac{12}{23}\\times\\ne\\equiv\\binom{1}{2}';
+                    // works as expected. Originally
+                    //      scope.latex = clone.html();
+                    // hack workaround:
+                    scope.latex = clone[0].textContent;
                 });
 
                 mathquill.mathquill('latex', scope.latex);
